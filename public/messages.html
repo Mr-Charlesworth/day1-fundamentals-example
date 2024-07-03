@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Messages</h1>
+    <a href="/message-count"><p>Show Message Count</p></a>
+    <form id="message-form">
+        <label for="from-input">From</label>
+        <input type="text" name="from" id="from-input">
+        <label for="from-input">Message</label>
+        <input type="text" name="message" id="message-input">
+        <input type="submit">
+    </form>
+    <div id="messages"></div>
+    <script src="message.js"></script>
+</body>
+</html>
