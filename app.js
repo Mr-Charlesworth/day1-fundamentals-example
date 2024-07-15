@@ -64,9 +64,9 @@ app.post('/post-message', check(['from', 'message']), (req, res) => {
 app.get('/messages-trad', (req, res) => {
   const populateMessages = () => {
     return messages.map(({ from, message }) => `
-      <p>From: ${from}</p>
-      <p>Message: ${message}<p>
-      <hr>
+          <p>From: ${from}</p>
+          <p>Message: ${message}<p>
+          <hr>
     `).join('')
   };
   const html = `
@@ -88,7 +88,9 @@ app.get('/messages-trad', (req, res) => {
           <input type="text" name="message" id="message-input">
           <input type="submit">
       </form>
-      <div id="messages">${populateMessages()}</div>
+      <div id="messages">
+          ${populateMessages()}
+      </div>
   </body>
   </html>
   `
