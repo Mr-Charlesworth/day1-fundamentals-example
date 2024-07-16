@@ -48,7 +48,18 @@ app.get('/message-count', (req, res) => {
   </body>
   </html>  
   `)
-})
+});
+
+app.post('/post-message-broken', check(['from', 'message']), (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    res.status(422)
+    return res.send({ errors: errors.array() })
+  }
+  console.log(req.body);
+  messages.push(req.body);
+  res.sendStatus(200)
+});
 
 app.post('/post-message', check(['from', 'message']), (req, res) => {
   const errors = validationResult(req);
@@ -59,9 +70,9 @@ app.post('/post-message', check(['from', 'message']), (req, res) => {
   console.log(req.body);
   messages.push(req.body);
   res.redirect('/messages-trad')
-})
+});
 
-app.get('/messages-trad', (req, res) => {
+const getMessagesHtml = (isBroken) => {
   const populateMessages = () => {
     return messages.map(({ from, message }) => `
           <p>From: ${from}</p>
@@ -69,8 +80,9 @@ app.get('/messages-trad', (req, res) => {
           <hr>
     `).join('')
   };
-  const html = `
-    <!DOCTYPE html>
+
+  return `
+  <!DOCTYPE html>
   <html lang="en">
   <head>
       <meta charset="UTF-8">
@@ -81,7 +93,7 @@ app.get('/messages-trad', (req, res) => {
   <body>
       <h1>Messages</h1>
       <a href="/"><p>Home</p></a>
-      <form method="post" action="/post-message">
+      <form method="post" action="/post-message${isBroken ? "-broken" : ""}">
           <label for="from-input">From</label>
           <input type="text" name="from" id="from-input">
           <label for="from-input">Message</label>
@@ -94,6 +106,15 @@ app.get('/messages-trad', (req, res) => {
   </body>
   </html>
   `
+}
+
+app.get('/messages-trad', (req, res) => {
+  const html = getMessagesHtml(false)
+  res.send(html);
+})
+
+app.get('/messages-trad-broken', (req, res) => {
+  const html = getMessagesHtml(true);
   res.send(html);
 })
 
