@@ -1,10 +1,7 @@
-const fromInput = document.getElementById('from-input');
-const messageInput = document.getElementById('message-input');
 const messageForm = document.getElementById('message-form');
 const messageList = document.getElementById('messages');
 
 const updateMessages = (messages) => {
-  console.log(messages);
   messageList.innerHTML = '';
   messages.forEach((message) => {
     const fromPara = document.createElement('p');
@@ -26,10 +23,9 @@ const getMessages = () => {
 messageForm.onsubmit = (e) => {
   e.preventDefault();
   const body = {
-    from: fromInput.value,
-    message: messageInput.value
+    from: messageForm.elements["from"].value,
+    message: messageForm.elements["message"].value
   }
-  console.log(body);
   const request = new Request('/api/messages', {
     method: 'POST',
     body: JSON.stringify(body),
