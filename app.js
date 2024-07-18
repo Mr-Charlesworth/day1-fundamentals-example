@@ -30,7 +30,7 @@ app.post('/api/messages', check(['from', 'message']), (req, res) => {
   }
   console.log(req.body);
   messages.push(req.body);
-  res.sendStatus(200);
+  res.sendStatus(201);
 });
 
 app.get('/message-count', (req, res) => {
